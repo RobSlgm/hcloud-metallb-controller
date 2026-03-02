@@ -4,7 +4,7 @@
 
 ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2](https://img.shields.io/badge/AppVersion-0.2-informational?style=flat-square) 
 
-This repository contains a Helm chart to install [HCloud MetalLB Operator](https://github.com/RobSlgm/hcloud-metallb-controller).
+This directory contains a Helm chart to install [HCloud MetalLB Operator](https://github.com/RobSlgm/hcloud-metallb-controller).
 
 ### Install the Chart
 
