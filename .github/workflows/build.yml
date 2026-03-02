@@ -62,7 +62,7 @@ jobs:
             /t:PublishContainer \
             /p:ContainerImageTags='"${{ steps.meta.outputs.SemVer2 }};${{ steps.meta.outputs.MajorMinorVersion }};${{ steps.meta.outputs.Version }};latest"' \
             -p ContainerRegistry=${{ env.REGISTRY }} \
-            -p ContainerRepository=${REPOSITORY_LC}/${IMAGE_NAME}
+            -p ContainerRepository=${REPOSITORY_LC}
 
       - name: Push Helm chart
         env:
