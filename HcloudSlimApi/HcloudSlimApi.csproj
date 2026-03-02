@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+        <DeterministicSourcePaths>true</DeterministicSourcePaths>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath="">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+        <PackageReference Include="RestSharp" Version="113.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.3.0" />
+        <PackageReference Include="RestSharp.Extensions.DependencyInjection" Version="113.1.0" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hcloud-metallb-controller.fullname" . }}
+  labels:
+    {{- include "hcloud-metallb-controller.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "hcloud-metallb-controller.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,33 @@
+# Helm chart for Hcloud MetalLB Operator <!-- omit in toc -->
+
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+This repository contains a Helm chart to install [HCloud MetalLB Operator](https://github.com/RobSlgm/hcloud-metallb-controller).
+
+### Install the Chart
+
+To install or update the chart with the release name my-release:
+
+```shell
+helm upgrade --install my-release  oci://ghcr.io/robslgm/charts/hcloud-metallb-controller
+```
+
+### Uninstalling the Chart
+
+To uninstall/delete the my-release deployment:
+
+```shell
+helm uninstall my-release
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release. Hcloud IP assignments remain unchanged.
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

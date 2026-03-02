@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <UserSecretsId>593c6e7f-e8eb-4b68-bd03-761aae330ac9</UserSecretsId>
+    </PropertyGroup>
+    <!-- CONTAINER: BEGIN -->
+    <PropertyGroup>
+        <IsPublishable>true</IsPublishable>
+        <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+        <ContainerRepository>library/hcloud-metallb-controller</ContainerRepository>
+        <ContainerFamily>noble-chiseled</ContainerFamily>
+        <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
+        <RuntimeIdentifiers>linux-x64;linux-arm64</RuntimeIdentifiers>
+        <ContainerRuntimeIdentifiers>linux-x64;linux-arm64</ContainerRuntimeIdentifiers>
+        <ContainerImageFormat>OCI</ContainerImageFormat>
+    </PropertyGroup>
+    <ItemGroup>
+        <ContainerEnvironmentVariable Include="DOTNET_CLI_TELEMETRY_OPTOUT" Value="1" />
+    </ItemGroup>
+    <!-- CONTAINER: END -->
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath="">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+        <DeterministicSourcePaths>true</DeterministicSourcePaths>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryUrl>https://github.com/RobSlgm/hcloud-metallb-controller</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../HcloudSlimApi/HcloudSlimApi.csproj" />
+        <ProjectReference Include="../HcloudMetallb/HcloudMetallb.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Meziantou.Analyzer" Version="3.0.18" Condition="'$(Configuration)' == 'Debug'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Serilog.Enrichers.Kubernetes" Version="1.1.4" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
+    </ItemGroup>
+</Project>

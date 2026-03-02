@@ -1,0 +1,62 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Hcloud Metallb Controller",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "buildcontroller",
+      "console": "internalConsole",
+      "cwd": "${workspaceFolder}/HcloudMetallbController",
+      "justMyCode": true,
+      "program": "${workspaceFolder}/artifacts/bin/HcloudMetallbController/debug/HcloudMetallbController.dll",
+      "stopAtEntry": false,
+      "launchSettingsProfile": "HcloudMetallbController",
+      "launchSettingsFilePath": "${workspaceFolder}/HcloudMetallbController/Properties/launchSettings.json",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "logging": {
+        "programOutput": true,
+        "moduleLoad": false,
+        "threadExit": false,
+        "processExit": true,
+        "exceptions": false,
+        "browserStdOut": false,
+        "diagnosticsLog": {
+          "protocolMessages": false
+        }
+      }
+    },
+    {
+      "name": "Hcloud Metallb Cli",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "buildcli",
+      "console": "internalConsole",
+      "cwd": "${workspaceFolder}/HcloudMetallbCli",
+      "justMyCode": true,
+      "program": "${workspaceFolder}/artifacts/bin/HcloudMetallbCli/debug/HcloudMetallbCli.dll",
+      "stopAtEntry": false,
+      "launchSettingsProfile": "HcloudMetallbCli",
+      "launchSettingsFilePath": "${workspaceFolder}/HcloudMetallbCli/Properties/launchSettings.json",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "logging": {
+        "programOutput": true,
+        "moduleLoad": false,
+        "threadExit": false,
+        "processExit": true,
+        "exceptions": false,
+        "browserStdOut": false,
+        "diagnosticsLog": {
+          "protocolMessages": false
+        }
+      }
+    }
+  ]
+}

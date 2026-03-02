@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "HcloudMetallbController": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "dotnetRunMessages": false,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

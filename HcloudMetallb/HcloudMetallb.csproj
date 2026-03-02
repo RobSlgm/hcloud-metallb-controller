@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <!-- <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault> -->
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+        <DeterministicSourcePaths>true</DeterministicSourcePaths>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../HcloudSlimApi/HcloudSlimApi.csproj" />
+        <ProjectReference Include="../K8sSlimApi/K8sSlimApi.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="IPNetwork2" Version="3.4.853" />
+    </ItemGroup>
+</Project>

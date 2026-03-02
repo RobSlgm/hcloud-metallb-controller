@@ -1,0 +1,6 @@
+<Solution>
+    <Project Path="HcloudSlimApi/HcloudSlimApi.csproj" />
+    <Project Path="HcloudMetallb/HcloudMetallb.csproj" />
+    <Project Path="HcloudMetallbController/HcloudMetallbController.csproj" />
+    <Project Path="K8sSlimApi/K8sSlimApi.csproj" />
+</Solution>
