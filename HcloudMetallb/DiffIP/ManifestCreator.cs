@@ -137,6 +137,7 @@ public sealed class ManifestCreator(IKubernetes k8s, IRestClientFactory restClie
             AliasIP? aliasIp = null;
             foreach (var network in networks)
             {
+                if(network.IpRange is null) continue;
                 if (!IPNetwork2.TryParse(network.IpRange, out var range))
                 {
                     Logger.LogWarning("Failed to parse IP range {ipRange} of network #{networkId}", network.IpRange, network.Id);
