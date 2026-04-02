@@ -22,7 +22,7 @@ public static class StartupExtensions
                         // .Handle<HttpRequestException>()
                         // .Handle<HttpIOException>()
                         .Handle<Exception>(),
-                        // .HandleResult(response => response.StatusCode == HttpStatusCode.TooManyRequests),
+                    // .HandleResult(response => response.StatusCode == HttpStatusCode.TooManyRequests),
                     MaxRetryAttempts = 3,
                     BackoffType = DelayBackoffType.Exponential,
                     UseJitter = true,
