@@ -17,6 +17,6 @@
         <ProjectReference Include="../K8sSlimApi/K8sSlimApi.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="IPNetwork2" Version="4.0.2" />
+        <PackageReference Include="IPNetwork2" Version="4.2.0" />
     </ItemGroup>
 </Project>
