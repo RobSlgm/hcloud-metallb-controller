@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
-            <PrivateAssets>all</PrivateAssets>
-            <Version>3.9.50</Version>
-        </PackageReference>
-    </ItemGroup>
-    <PropertyGroup>
-        <UseArtifactsOutput>true</UseArtifactsOutput>
-        <Company>closure.ch</Company>
-        <Copyright>© 2026 Robert Bill</Copyright>
-        <Authors>Robert Bill</Authors>
-    </PropertyGroup>
-    <PropertyGroup>
-        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    </PropertyGroup>
+  <PropertyGroup>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <Company>closure.ch</Company>
+    <Copyright>© 2026 Robert Bill</Copyright>
+    <Authors>Robert Bill</Authors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="6.7.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>
