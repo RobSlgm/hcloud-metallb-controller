@@ -81,10 +81,24 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish server container to registry
+        if: steps.meta.outputs.is_prerelease == false
         env:
           REPOSITORY_LC: ${{ steps.meta.outputs.repository_lc }}
           IMAGE_NAME: "hcloud-metallb-operator"
           ContainerImageTags: "${{ steps.meta.outputs.clean_version }};${{ steps.meta.outputs.MajorMinorPatch }};${{ steps.meta.outputs.MajorMinor }};latest"
+        run: |
+          dotnet publish \
+            ${{ env.PROJECT_PATH }} \
+            /t:PublishContainer \
+            -p ContainerRegistry=${{ env.REGISTRY }} \
+            -p ContainerRepository=${REPOSITORY_LC}
+
+      - name: Publish server container to registry (pre-release)
+        if: steps.meta.outputs.is_prerelease == true
+        env:
+          REPOSITORY_LC: ${{ steps.meta.outputs.repository_lc }}
+          IMAGE_NAME: "hcloud-metallb-operator"
+          ContainerImageTags: "${{ steps.meta.outputs.clean_version }}"
         run: |
           dotnet publish \
             ${{ env.PROJECT_PATH }} \
