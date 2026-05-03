@@ -24,7 +24,8 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    Log.Information("Starting Hcloud Metallb Controller {version}", ThisAssembly.AssemblyInformationalVersion.Split('+')[0]);
+    // Log.Information("Starting Hcloud Metallb Controller {version}", ThisAssembly.AssemblyInformationalVersion.Split('+')[0]);
+    Log.Information("Starting Hcloud Metallb Controller");
 
     var builder = WebApplication.CreateSlimBuilder(args);
 
