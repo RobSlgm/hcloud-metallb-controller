@@ -1,10 +1,11 @@
 name: 🏭 Build Hcloud Metallb Controller
 
 on:
+  workflow_dispatch:
   push:
     tags:
-      - "v[0-9]*.[0-9]*.[0-9]*"     # Pattern for standard: v1.2.3
-      - "v[0-9]*.[0-9]*.[0-9]*-*"   # Pattern for pre-release: v1.2.3-alpha.1
+      - "v[0-9]*.[0-9]*.[0-9]*" # Pattern for standard: v1.2.3
+      - "v[0-9]*.[0-9]*.[0-9]*-*" # Pattern for pre-release: v1.2.3-alpha.1
 
 env:
   REGISTRY: ghcr.io
@@ -25,36 +26,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Extract meta information
-        id: meta
+      - name: Extract repo names
+        id: repoinfo
         shell: bash
         run: |
-          # Use parameter expansion to strip 'v' prefix from the tag name
-          CLEAN_VERSION=${GITHUB_REF_NAME#v}
-          echo "clean_version=${CLEAN_VERSION}" >> $GITHUB_OUTPUT
-          if [[ $CLEAN_VERSION == *"-"* ]]; then
-            echo "is_prerelease=true" >> $GITHUB_OUTPUT
-          else
-            echo "is_prerelease=false" >> $GITHUB_OUTPUT
-          fi
-          MAJOR=$(echo $CLEAN_VERSION | cut -d. -f1)
-          MINOR=$(echo $CLEAN_VERSION | cut -d. -f2)
-          PATCH=$(echo $CLEAN_VERSION | cut -d. -f3 | cut -d- -f1)
-          PRERELEASE=$(echo $CLEAN_VERSION | grep -oP '(?<=-).*' || echo "")
-          echo "MajorMinor=$MAJOR.$MINOR" >> $GITHUB_OUTPUT
-          echo "MajorMinorPatch=$MAJOR.$MINOR.$PATCH" >> $GITHUB_OUTPUT
-          echo "Major=$MAJOR" >> $GITHUB_OUTPUT
-          echo "Minor=$MINOR" >> $GITHUB_OUTPUT
-          echo "Patch=$PATCH" >> $GITHUB_OUTPUT
-          echo "Prerelease=$PRERELEASE" >> $GITHUB_OUTPUT
-          GIT_COMMIT_DATE=$(git show --no-patch --format=%cI)
-          echo "git_commit_date=$GIT_COMMIT_DATE" >> $GITHUB_OUTPUT
           REPOSITORY_LC=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           echo "repository_lc=$REPOSITORY_LC" >> $GITHUB_OUTPUT
           REPOSITORY_OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           echo "repository_owner_lc=$REPOSITORY_OWNER_LC" >> $GITHUB_OUTPUT
-          IS_ON_BRANCH=$(git branch -r --contains ${{ github.ref }} | grep -E '^[*[:space:]]+origin/(main|release/)' || true)
-          echo "is_on_branch=$IS_ON_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -63,15 +42,10 @@ jobs:
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v4.5.0
-        # with:
-        #   versionSpec: '6.0.0'
 
       - name: Determine Version
-        id: version_step # step id used as a reference for output values
+        id: meta
         uses: gittools/actions/gitversion/execute@v4.5.0
-        with:
-          # updateAssemblyInfo: true
-          updateProjectFiles: true
 
       - name: Log in to registry
         uses: docker/login-action@v4
@@ -82,12 +56,12 @@ jobs:
 
       - name: Publish container to registry
         env:
-          REPOSITORY_LC: ${{ steps.meta.outputs.repository_lc }}
+          REPOSITORY_LC: ${{ steps.repoinfo.outputs.repository_lc }}
           IMAGE_NAME: "hcloud-metallb-operator"
           ContainerImageTags: >-
-            ${{ steps.meta.outputs.is_prerelease == 'true'
-                && steps.meta.outputs.clean_version
-                || format('{0};{1};{2};latest', steps.meta.outputs.clean_version, steps.meta.outputs.MajorMinorPatch, steps.meta.outputs.MajorMinor)
+            ${{ steps.meta.outputs.PreReleaseLabel != ''
+                && format('{0};{1};{2}', steps.meta.outputs.SemVer, steps.meta.outputs.MajorMinorPath, steps.meta.outputs.InformationalVersion)
+                || format('{0};{1}.{2};{3};latest', steps.meta.outputs.SemVer, steps.meta.outputs.Major, steps.meta.outputs.Minor, steps.meta.outputs.InformationalVersion)
             }}
         run: |
           dotnet publish \
@@ -104,8 +78,8 @@ jobs:
 
       - name: Push Helm chart
         env:
-          SEMVERSION: ${{ steps.meta.outputs.clean_version }}
-          REPOSITORY_OWNER_LC: ${{ steps.meta.outputs.repository_owner_lc }}
+          SEMVERSION: ${{ steps.meta.outputs.SemVer }}
+          REPOSITORY_OWNER_LC: ${{ steps.repoinfo.outputs.repository_owner_lc }}
           CHART_NAME: ${{ steps.chartname.outputs.result }}
         run: |
           helm package ./deploy --version "$SEMVERSION" --app-version "$SEMVERSION"
@@ -113,10 +87,14 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
-        if: github.ref_type == 'tag'
+        # if: github.ref_type == 'tag'
         with:
-          tag_name: ${{ github.ref_name }}
-          name: "${{ github.ref_name }}"
+          # tag_name: ${{ github.ref_name }}
+          # name: "${{ github.ref_name }}"
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', steps.meta.outputs.SemVer) }}
+          name: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', steps.meta.outputs.SemVer) }}
           generate_release_notes: true
+          target_commitish: ${{ github.sha }}
           draft: false
-          prerelease: ${{ steps.meta.outputs.is_prerelease == 'true' }}
+          prerelease: ${{ steps.meta.outputs.PreReleaseTag != '' }}
+          make_latest: ${{ steps.meta.outputs.PreReleaseTag == '' }}
