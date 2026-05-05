@@ -1,4 +1,4 @@
-name: 🏭 Build Hcloud Metallb Controller
+name: 🏭 Publish Hcloud Metallb Controller
 
 on:
   workflow_dispatch:
@@ -22,7 +22,8 @@ jobs:
       pull-requests: read
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
