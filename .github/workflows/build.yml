@@ -87,10 +87,7 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
-        # if: github.ref_type == 'tag'
         with:
-          # tag_name: ${{ github.ref_name }}
-          # name: "${{ github.ref_name }}"
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', steps.meta.outputs.SemVer) }}
           name: ${{ github.ref_type == 'tag' && github.ref_name || format('v{0}', steps.meta.outputs.SemVer) }}
           generate_release_notes: true
