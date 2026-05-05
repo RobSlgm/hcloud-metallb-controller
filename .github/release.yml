@@ -1,0 +1,44 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+
+  categories:
+    - title: Breaking Changes 🛠
+      labels:
+        - breaking-change
+    - title: 🎉 Feature
+      labels:
+        - feat
+        - feature
+        - enhancement
+      exclude:
+        labels:
+          - dependencies
+    - title: 🐛 Bug
+      labels:
+        - bug
+        - fix
+    - title: 🔥 Remove
+      labels:
+        - remove
+    - title: ♻ Refactoring
+      labels:
+        - refactoring
+        - chore
+    - title: ✅ Testing
+      labels:
+        - testing
+    - title: ⬆ Dependencies
+      labels:
+        - dependencies
+        - deps
+    - title: 🔒 Security
+      labels:
+        - security
+    - title: 📝 Documentation
+      labels:
+        - documentation
+    - title: Other Changes
+      labels:
+        - "*"
