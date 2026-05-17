@@ -61,8 +61,8 @@ jobs:
           IMAGE_NAME: "hcloud-metallb-operator"
           ContainerImageTags: >-
             ${{ steps.meta.outputs.PreReleaseLabel != ''
-                && format('{0};{1};{2}', steps.meta.outputs.SemVer, steps.meta.outputs.MajorMinorPath, steps.meta.outputs.InformationalVersion)
-                || format('{0};{1}.{2};{3};latest', steps.meta.outputs.SemVer, steps.meta.outputs.Major, steps.meta.outputs.Minor, steps.meta.outputs.InformationalVersion)
+                && format('{0};{1};{2}', steps.meta.outputs.SemVer, steps.meta.outputs.MajorMinorPatch, steps.meta.outputs.AssemblySemFileVer)
+                || format('{0};{1};{2};latest', steps.meta.outputs.SemVer, steps.meta.outputs.MajorMinorPatch, steps.meta.outputs.AssemblySemFileVer)
             }}
         run: |
           dotnet publish \
