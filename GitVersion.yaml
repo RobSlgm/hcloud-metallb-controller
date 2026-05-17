@@ -5,6 +5,7 @@ branches:
     label: "beta"
   feature:
     mode: ContinuousDelivery
-assembly-versioning-format: "{MajorMinorPatch}.{WeightedPreReleaseNumber}"
-assembly-file-versioning-format: "{MajorMinorPatch}.{WeightedPreReleaseNumber}"
-assembly-informational-format: "{MajorMinorPatch}.{WeightedPreReleaseNumber}"
+assembly-versioning-format: '{MajorMinorPatch}.0'
+assembly-file-versioning-format: '{MajorMinorPatch}.{WeightedPreReleaseNumber}'
+assembly-informational-format: '{MajorMinorPatch}+{ShortSha}'
+commit-date-format: yyyy-MM-ddTHH:mm:ssZ
