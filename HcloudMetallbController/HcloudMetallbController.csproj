@@ -45,7 +45,7 @@
         <ProjectReference Include="../HcloudMetallb/HcloudMetallb.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Meziantou.Analyzer" Version="3.0.85" Condition="'$(Configuration)' == 'Debug'">
+        <PackageReference Include="Meziantou.Analyzer" Version="3.0.104" Condition="'$(Configuration)' == 'Debug'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -53,6 +53,6 @@
         <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
         <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
-        <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1" />
     </ItemGroup>
 </Project>
