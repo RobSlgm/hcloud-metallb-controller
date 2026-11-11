@@ -11,7 +11,7 @@ env:
   REGISTRY: ghcr.io
   PROJECT_PATH: "HcloudMetallbController/HcloudMetallbController.csproj"
   CHART_REPO: charts
-  DOTNET_VERSION: "10.x"
+  DOTNET_VERSION: "11.x"
 
 jobs:
   build:
@@ -35,6 +35,8 @@ jobs:
           echo "repository_lc=$REPOSITORY_LC" >> $GITHUB_OUTPUT
           REPOSITORY_OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           echo "repository_owner_lc=$REPOSITORY_OWNER_LC" >> $GITHUB_OUTPUT
+          REPOSITORY_EPOCH=$(git log -1 --pretty=%ct)
+          echo "repository_epoch=$REPOSITORY_EPOCH" >> $GITHUB_OUTPUT
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
@@ -58,6 +60,7 @@ jobs:
       - name: Publish container to registry
         env:
           REPOSITORY_LC: ${{ steps.repoinfo.outputs.repository_lc }}
+          REPOSITORY_EPOCH: ${{ steps.repoinfo.outputs.repository_epoch }}
           IMAGE_NAME: "hcloud-metallb-operator"
           ContainerImageTags: >-
             ${{ steps.meta.outputs.PreReleaseLabel != ''
@@ -69,6 +72,7 @@ jobs:
             ${{ env.PROJECT_PATH }} \
             /t:PublishContainer \
             -p ContainerRegistry=${{ env.REGISTRY }} \
+            -p SOURCE_DATE_EPOCH=${REPOSITORY_EPOCH} \
             -p ContainerRepository=${REPOSITORY_LC}
 
       - name: Get chart name
