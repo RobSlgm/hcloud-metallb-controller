@@ -60,6 +60,7 @@ jobs:
       - name: Publish container to registry
         env:
           REPOSITORY_LC: ${{ steps.repoinfo.outputs.repository_lc }}
+          REPOSITORY_EPOCH: ${{ steps.repoinfo.outputs.repository_epoch }}
           IMAGE_NAME: "hcloud-metallb-operator"
           ContainerImageTags: >-
             ${{ steps.meta.outputs.PreReleaseLabel != ''
