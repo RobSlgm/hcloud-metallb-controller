@@ -35,7 +35,7 @@ jobs:
           echo "repository_lc=$REPOSITORY_LC" >> $GITHUB_OUTPUT
           REPOSITORY_OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           echo "repository_owner_lc=$REPOSITORY_OWNER_LC" >> $GITHUB_OUTPUT
-          REPOSITORY_EPOCH=$(git log -1 --pretty=%ct)"
+          REPOSITORY_EPOCH=$(git log -1 --pretty=%ct)
           echo "repository_epoch=$REPOSITORY_EPOCH" >> $GITHUB_OUTPUT
 
       - name: Setup .NET
