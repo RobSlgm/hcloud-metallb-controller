@@ -31,15 +31,6 @@ public static class HcloudClientExtensions
     {
         public IServiceCollection AddHcloudApiClient(HcloudOptions? hcloudOptions)
         {
-
-            services.AddHttpClient(
-                nameof(HcloudClient)).AddStandardResilienceHandler(options =>
-                {
-                    options.Retry.Delay = TimeSpan.FromSeconds(2);
-                    options.Retry.UseJitter = true;
-                    options.Retry.BackoffType = DelayBackoffType.Exponential;
-                }
-            );
             services.AddRestClient(
                 nameof(HcloudClient),
                 options =>
@@ -62,6 +53,14 @@ public static class HcloudClientExtensions
                     TypeInfoResolver = Models.SourceGenerationContext.Default,
                     PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
                 })
+            );
+            services.AddHttpClient(nameof(HcloudClient))
+            .AddStandardResilienceHandler(options =>
+            {
+                options.Retry.Delay = TimeSpan.FromSeconds(2);
+                options.Retry.UseJitter = true;
+                options.Retry.BackoffType = DelayBackoffType.Exponential;
+            }
             );
 
             return services;
